@@ -4,7 +4,7 @@ def Sup(n):
     total = 0
     vals = np.float64(np.linspace(1, n, n))
     for num in vals:
-        total += np.float64(num**-1)
+        total += num**-1
     return total
 def Sdown(n):
     total = 0
@@ -15,7 +15,7 @@ def Sdown(n):
 def logcomp(up, down):
     up = np.float64(up)
     down = np.float64(down)
-    return (up - down)/(np.abs(up) + np.abs(down))
+    return (np.float64(up - down)/(np.abs(up) + np.abs(down)))
 comps = []
 nvals = []
 print("Summing up: \t \t Summing down:")
@@ -32,4 +32,4 @@ plt.loglog(nvals, comps)
 plt.title("Plot of Percent Error of Summations vs Number of Terms in Summation")
 plt.xlabel("sum limit $N = 10^n$")
 plt.ylabel("Sum of $n^{-1}$")
-plt.savefig("3b.pdf")
+plt.savefig("3a.pdf")
