@@ -20,7 +20,7 @@ for x in [1, 10, 50]:
         xvals.append(N)
         yvals.append(ntherm(x,N,N-1))
     plt.figure()
-    plt.plot(xvals, yvals, linestyle="none", marker=".")
+    plt.plot(xvals, yvals)
     plt.title("Approximation of sin(x) for x=" + str(x))
     plt.xlabel("term n")
     plt.ylabel("nth term from maclaurin series")

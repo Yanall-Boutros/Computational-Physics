@@ -1,0 +1,3 @@
+Hello, world.
+Hola, mundo.
+The number of seconds in a typical week, to 4 significant digits and in scientific notation is  6.0480e+05

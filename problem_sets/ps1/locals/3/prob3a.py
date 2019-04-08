@@ -2,20 +2,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 def Sup(n):
     total = 0
-    vals = np.float64(np.linspace(1, n, n))
+    vals = np.float32(np.linspace(1, n, n))
     for num in vals:
         total += num**-1
     return total
 def Sdown(n):
     total = 0
-    vals = np.float64(np.linspace(n, 1, n))
+    vals = np.float32(np.linspace(n, 1, n))
     for num in vals:
         total += num**-1
     return total
 def logcomp(up, down):
-    up = np.float64(up)
-    down = np.float64(down)
-    return (np.float64(up - down)/(np.abs(up) + np.abs(down)))
+    up = np.float32(up)
+    down = np.float32(down)
+    if up > down: return (np.float32(up - down)/(np.abs(up) + np.abs(down)))
+    else: return np.float32(down-up)/np.abs(up)+np.abs(down)
 comps = []
 nvals = []
 print("Summing up: \t \t Summing down:")
