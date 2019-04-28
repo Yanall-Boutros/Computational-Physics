@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 import scipy.integrate as scint
 # Generalized rk2 ODE solver
 h = 0.0001
-def deriv(t, y):
-    return (y(t + h)-y(t))/h
-
 def rk2n(func_pntr, func_args=[0, 0], init_cond=[0, 0]):
     # y_n+1 = y_n + k_2
     # k_2 = hf(t_n + h/2, y_n + k_1/2)

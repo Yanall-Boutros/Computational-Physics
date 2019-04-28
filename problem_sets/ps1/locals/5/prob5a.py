@@ -33,13 +33,21 @@ for l in np.linspace(1, 25, 25):
         print(l, "\t", x, "\t", d, "\t", u, "\t", percdiff)
 # Generate Graphs of first 100 bessel functions
 xdata = np.linspace(-95, 95, 1000)
+ysum = np.zeros(len(xdata))
 plt.figure()
 for l in np.linspace(0, 99, 100):
     ydata = []
     for x in xdata:
         ydata.append(down(x, l, start))
+    ysum += ydata
     plt.plot(xdata, ydata)
 plt.title("First 100th order bessel functions")
 plt.xlabel("x")
 plt.ylabel("$J_l(x)$")
 plt.savefig("bessel.pdf")
+plt.figure()
+plt.plot(xdata, ysum)
+plt.title("Sum of the first 100 order bessel functions")
+plt.xlabel("x")
+plt.ylabel("$\Sigma J_l(x)$")
+plt.savefig("Sum.pdf")
