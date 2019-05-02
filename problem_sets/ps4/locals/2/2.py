@@ -17,10 +17,12 @@ for neutron in AllCollisions:
         y += np.sin(theta[i])
         xvalues.append(x)
         yvalues.append(y)
-        if x > 5 or x < 0:
-            if x > 5:
-                FREEDOMHAHAHAHA.append(neutron)
-                FREEDOMESCAPEPOINT.append(y)
+        if x > 5: # Problem specified only if the particle escapes
+            # To the other side of the wall (x > 5). I would add 
+            # or x < 0 to my if statement if I wanted to include
+            # particles which escape by making a full $360^\circ$
+            FREEDOMHAHAHAHA.append(neutron)
+            FREEDOMESCAPEPOINT.append(y)
             break
 print(str(100*len(FREEDOMHAHAHAHA) / len(AllCollisions))+"% Escape",
       "through to the other side")

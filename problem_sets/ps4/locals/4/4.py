@@ -24,9 +24,10 @@ plt.ylim(-30, 30)
 # Should return -5.463
 a = bisect(fw, -5.5, -5.3, 1000000, 0.0000000001)
 print("x = ", str(a), " f(x) = ", str(fw(a)))
+# Should return 6.830
 b = bisect(fw, 6.7, 6.9, 1000000, 0.0000000001)
 print("x = ", b, " f(x) = ", fw(b))
-c = bisect(fw, -7.99, -7, 1000000, 0.0000000001)
+c = bisect(fw, 1, 1.5, 1000000, 0.0000000001)
 print("x = ", c, " f(x) = ", fw(c))
-# Should return 6.830
+# Should return 1.395
 plt.savefig("plt.pdf")

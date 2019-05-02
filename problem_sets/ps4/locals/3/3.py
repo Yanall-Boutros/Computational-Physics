@@ -27,8 +27,6 @@ def energy(S):
     first_set = np.concatenate([np.array([S[-1]]), S[:-1]])
     FirstTerm = np.sum(-J*first_set[:-1]*first_set[1:])
     SecondTerm = np.sum(-mu*S*B)                                          
-#    for i in range(-1,N-1):         # by starting with index -1, we can implement periodic boundary conditions
-#        FirstTerm += -J * S[i]*S[i+1]
     return (FirstTerm + SecondTerm); 
 
 state = -1*state
