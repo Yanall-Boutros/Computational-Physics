@@ -98,7 +98,7 @@ def diag_adjacents_2(S, coor):
 def energy_change(S, coor):
     # Multiply spin site by all adjacent elements
     total_adjacent_spins = grid_adjacents(S, coor)
-    return 2*S[coor[0],coor[1]]*(J*(total_adjacent_spins) + B*mu)
+    return 2*S[coor]*(J*(total_adjacent_spins) + B*mu)
 
 def make_ani(deltas):
     # Makes an animation from inital state, to delta values
@@ -116,8 +116,8 @@ def make_ani(deltas):
 def save_ani(all_states):
     ims = []
     fig = plt.figure()
-    for i, img in enumerate(all_states):
-        ims.append([plt.imshow(img, cmap=binary,animated=True)])
+    for img in all_states:
+        ims.append([plt.imshow(img, cmap='binary', animated=True)])
     im_ani = animation.ArtistAnimation(fig, ims,
                                        interval=35,
                                        repeat_delay=1000,
@@ -126,36 +126,37 @@ def save_ani(all_states):
 
 def TwoDIsing(state0, num_steps, J, mu, B, kT):
     ES = energy(state0, J, mu, B)
+    Mag = np.sum(state0)
     energy_values = [ES]
-    # Contains a copy of the state configuration so we don't have to store
-    # 2**N**2 * # of time step elements
-    #state_configs = np.array([state0, state0])
     deltas = [] # A lighter way of keeping track of how the state changes.
+    magsi = [Mag]
     rands = np.random.randint(N[0], size=(num_steps,2))
     count = 1
-    magsi = []
-    evals = []
-    for x, y in rands:
-        if count/num_steps > 0.5:
-            magsi.append(np.abs(np.sum(state0)))
+    for x,y in rands:
         # Trial step: flip spin at one random site
-        state0[x][y] *= -1
-        ET = ES + energy_change(state0, (x,y))
-        if np.exp((ES-ET)/(kT)) > np.random.random():
-            #state_configs[-1] = test_state      # replace the state, or
-            ES = ET
+        state0[x,y] *= -1
+        dE = energy_change(state0, (x,y))
+        ET = ES + dE
+        MT = Mag + 2*state0[x,y]
+        if np.exp((-dE)/(kT)) > np.random.random():
+            # replace the state, or
+            ES = ES - dE
+            Mag = MT
             deltas.append((x,y))
         else:
             # advance the previous state forward
             state0[x,y] *= -1
             deltas.append(())
         energy_values.append(ES)
+        magsi.append(Mag)
         count += 1
         if count % 100000 == 0: print((count / num_steps)*100,
                                       " %..................")
-    magsi = np.array(magsi)
-    return (state0, energy_values, deltas, np.average(magsi),
-            np.average(energy_values[int(num_steps/2):]))
+    magsi = np.abs(np.array(magsi))
+    magsi /= (N[0] * N[1])
+    energy_values = np.array(energy_values)
+    return (state0, -1*energy_values, deltas, np.average(magsi[int(num_steps/2):]),
+            np.average(-1*energy_values[int(num_steps/2):]))
 # ==============================================================================
 # Constant Definitions
 # ==============================================================================
@@ -165,7 +166,7 @@ B           = 0.05                      # magnetic field
 mu          = .33                       # g mu (not needed if B=0)
 J           = 1.                        # exchange energy                              
 state0      = -1*np.ones(N)             # Initalize the model
-ktvals      = np.arange(0.05, 10, 0.05) # Domain of kT to iterate over
+ktvals      = np.arange(0.15, 7, 0.15)  # Domain of kT to iterate over
 mags        = []                        # Average Magnetization
 avgevals    = []                        # Average Energy
 cv_vals     = []                        # Specific Heat
@@ -194,7 +195,7 @@ for i, kt in enumerate(ktvals):
 # -----------------------------------------------------------------------------
 # Magnetization vs kT
 plt.figure()
-plt.plot(ktvals[1:], mags[1:])
+plt.plot(ktvals, mags)
 plt.xlabel("$kT$")
 plt.ylabel("Average Magnetization")
 plt.title("Average Magnetization vs $kT$")
@@ -202,7 +203,7 @@ plt.savefig("mags.pdf")
 plt.close()
 # Average Energy vs kT
 plt.figure()
-plt.plot(ktvals[1:], avgevals[1:])
+plt.plot(ktvals, avgevals)
 plt.xlabel("$kT$")
 plt.ylabel("Average Energy")
 plt.title("Average Energy vs $kT$")
@@ -210,51 +211,17 @@ plt.savefig("avgEnergy.pdf")
 plt.close()
 # Specific Heat vs kT
 plt.figure()
-plt.plot(ktvals. cv_vals)
+plt.plot(ktvals, cv_vals)
 plt.xlabel("$kT$")
 plt.ylabel("CV")
 plt.title("Specific Heat vs Temperature")
 plt.savefig("cv.pdf")
 plt.close()
 # Animate the change from beginning to end
-print("Animating", 72*'=')
+print("Compiling Frames", 72*'=')
 for delta in deltas:
     big_deltas.extend(delta)
 frames = make_ani(big_deltas)
+print("Rendering Frames", 72*'=')
 save_ani(frames)
 plt.close()
-# ==============================================================================
-# Induce a magnetic pulse, and watch how the simulation changes
-# ==============================================================================
-#state0[89:109,89:109] = -1
-#init_state = state0.copy()
-#rvals = TwoDIsing(state0, num_steps, J, mu, B, kt)
-#E_set = np.array(rvals[1])
-#plt.plot(E_set)
-#plt.xlabel("Time Step")
-#plt.ylabel("Energy")
-#plt.savefig("Energy_Pulse.pdf")
-#plt.close()
-#cv_vals.append(calc_cv(E_set[int(num_steps/2):], kt, N[0]*N[1]))
-#deltas.append(rvals[2])
-#mags.append(rvals[3])
-#avgevals.append(rvals[4])
-#
-#all_states = []
-#all_states.append(init_state.copy())
-## Average the state over each 100 time steps
-#for i in range(len(deltas[-1])):
-#    if deltas[-1][i] != ():
-#        init_state[deltas[-1][i]] *= -1
-#    if (i+1) % 100 == 0:
-#        all_states.append(init_state.copy())
-#
-#ims = []
-#fig = plt.figure()
-#for img in all_states:
-#    ims.append([plt.imshow(img, animated=True)])
-#im_ani = animation.ArtistAnimation(fig, ims,
-#                                   interval=35,
-#                                   repeat_delay=1000,
-#                                   blit=True)
-#im_ani.save("PulseChange.mp4")
