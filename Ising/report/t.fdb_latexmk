@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1560040151 "t.tex" "t.pdf" "t" 1560040151
+["pdflatex"] 1560041874 "t.tex" "t.pdf" "t" 1560041874
   "/etc/texmf/web2c/texmf.cnf" 1558554971 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/yanall/texmf/tex/generic/epsf/epsf.sty" 1480098813 27123 4572e7b856182a1e6e9df1c7cc21de80 ""
   "/home/yanall/texmf/tex/generic/ulem/ulem.sty" 1480098819 23756 854c01b779030ff5b2aad88ba7a119f2 ""
@@ -80,8 +80,8 @@
   "g_cv.pdf" 1560036765 15237 ad5c42bfe1478ecc744da11769396053 ""
   "g_e_0.pdf" 1560036761 21069 5d68190508aa3c119f18a194a6b05a08 ""
   "g_mags.pdf" 1560036754 14179 6b07a8c7e4a3bd4a595f22725c106a22 ""
-  "t.aux" 1560040151 2293 df4ca42e966aefa862c6f275bad48894 ""
-  "t.tex" 1560040150 7948 b8c036d3b43a168f7170d5ea8d939a81 ""
+  "t.aux" 1560041874 2283 4adae745ab4227d173afb0c8d2c87a00 ""
+  "t.tex" 1560041872 10748 a6069017c239158f1286909456ccc134 ""
   (generated)
   "t.pdf"
   "t.log"

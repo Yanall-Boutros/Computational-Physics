@@ -99,7 +99,7 @@ available in the zipped filesystem this report is contained in.
   \includegraphics[scale=0.4]{g_e_0.pdf}
   \includegraphics[scale=0.4]{g_avg_energy.pdf}
   \caption{\textit{(right)} plot of average energy vs $kt$.
-    note an inflection at $\approx$ $kt = 2.5$, which is evidence of a
+    note an inflection at  $kt \approx 2.5$, which is evidence of a
     phase transition.}
 \end{figure}
 \begin{figure}[H]
@@ -116,7 +116,7 @@ available in the zipped filesystem this report is contained in.
   \includegraphics[scale=0.35]{a_e_0.pdf}
   \includegraphics[scale=0.35]{a_avg_energy.pdf}
   \caption{\textit{(right)} plot of average energy vs $kt$.
-    note an inflection at $\approx$ $kt = 2.2$, which is evidence of a
+    note an inflection at $kt \approx 2.2$, which is evidence of a
     phase transition.}
 \end{figure}
 \begin{figure}[H]
@@ -144,6 +144,45 @@ available in the zipped filesystem this report is contained in.
   $kT \approx 1.8 $ and $kt \approx 2.1$}
 \end{figure}
 \section*{V. Analysis}
-\indent \indent 
+\indent \indent Comparing the graphs to the analytical solutions provided in the
+textbook \textit{Computational Physics: Problem Solving with Python} by Rubin H.
+Landau, Manuel J. Paez, and Cristian C. Bordeianu, my graphs for the grid-adj 
+configuration appears flipped vertically for both the average energy and the 
+average magnitization. The simulation was ran multiple times, with different 
+methods for calculating $E$, $\Delta E$, and $M$ but yielded the same results.
+The inflection points occur at roughly the same value for $kT$ however which is 
+a promising sign that the simulation shows some sign of success. The magnitization
+also appears flipped, as in my model the initial average magnitization is zero
+and jumps to its maximum after the phase transition, the book has it initially
+at a maximum and dropping to zero. The Specific heat graph looks promising for 
+this configuration, as we have a peak right at $kT \approx 2.5$, in agreement
+with the text.
+
+\indent The all-adjacent configuration has similar defects as the grid-adjacent
+configuration. Flipped values for average energy and average magnitization but
+the specific heat is nominal. It appears in this configuration the critical
+temperature is a little lower, closer to 2.2, than in the previous configuration.
+We can see this critical change occur at a value of $kT$ in \textbf{Figure 7}
+as the slope becomes less steep.
+
+\indent Lastly, the diag-adjacent configuration looks the least promising to
+deliver any interesting results, as it almost appears to have two critical 
+temperatures on \textbf{Figure 12}. The average energy does not behave 
+consistently with the other graphs, so it is unlikely to make any strong 
+conclusions from this particular model.
 \section*{VI. Conclusion}
+\indent \indent Although the diag-model appears to be a failure, there is still
+a possibility that it is accurate, implying atoms with electrons that are aligned
+$45^\circ$ off from the material they constitute really do exhibit these properties.
+Additionally, the structure of the material appears to maintain some order, so there
+is still some uncertainty on the results of this particular configuration. For now,
+areas to expand this project in the future should focus on generalizing the model
+to even more (if not all) dimensions, implementing and observing the wavelike 
+behaviour of spin pulses, and attempting to solve for the physical properties
+the 2D ising model by starting from the 4D Ising model which has a closed form 
+solution, then slowly decreasing the length of one of the axes to be on the scale
+of the coherence length, making the model and its physical properties behave like
+a 3D model. Lastly, shorten again the length of one of the other remaining dimensions
+to the scale of the coherence length, and determine the physical properties of the
+2D Ising model.
 \end{document}
