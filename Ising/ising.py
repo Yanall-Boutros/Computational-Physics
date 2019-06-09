@@ -11,13 +11,13 @@ import matplotlib.animation as animation
 # ==============================================================================
 # Function Definitions
 # ==============================================================================
-def calc_cv(E, kT, N):
+def calc_cv(avgE, avgE2,kT, N):
     # specific heat is given by 1/N^2
     # times average (E^2) - (average E)^2
     # Divided by kT^2
     A = 1/(N**2)
-    B = np.average(E**2)
-    C = np.average(E)**2
+    B = avgE2
+    C = avgE**2
     D = 1/(kT**2)
     return A*(B-C)*D
 
@@ -97,7 +97,7 @@ def diag_adjacents_2(S, coor):
     
 def energy_change(S, coor):
     # Multiply spin site by all adjacent elements
-    total_adjacent_spins = grid_adjacents(S, coor)
+    total_adjacent_spins = diag_adjacents_2(S, coor)
     return 2*S[coor]*(J*(total_adjacent_spins) + B*mu)
 
 def make_ani(deltas):
@@ -155,8 +155,9 @@ def TwoDIsing(state0, num_steps, J, mu, B, kT):
     magsi = np.abs(np.array(magsi))
     magsi /= (N[0] * N[1])
     energy_values = np.array(energy_values)
-    return (state0, -1*energy_values, deltas, np.average(magsi[int(num_steps/2):]),
-            np.average(-1*energy_values[int(num_steps/2):]))
+    return (state0, energy_values, deltas, np.average(magsi[int(num_steps/2):]),
+            np.average(energy_values[int(num_steps/2):]),
+            np.average(energy_values[int(num_steps/2):]**2))
 # ==============================================================================
 # Constant Definitions
 # ==============================================================================
@@ -166,7 +167,7 @@ B           = 0.05                      # magnetic field
 mu          = .33                       # g mu (not needed if B=0)
 J           = 1.                        # exchange energy                              
 state0      = -1*np.ones(N)             # Initalize the model
-ktvals      = np.arange(0.15, 7, 0.15)  # Domain of kT to iterate over
+ktvals      = np.arange(1, 10, 0.05)    # Domain of kT to iterate over
 mags        = []                        # Average Magnetization
 avgevals    = []                        # Average Energy
 cv_vals     = []                        # Specific Heat
@@ -178,6 +179,8 @@ np.random.seed()                        # random seed
 # ==============================================================================
 for i, kt in enumerate(ktvals):
     rvals = TwoDIsing(state0, num_steps, J, mu, B, kt)
+    avg_E = rvals[4]
+    avg_E2 = rvals[5]
     E_set = np.array(rvals[1])
     plt.figure()
     plt.plot(E_set)
@@ -185,7 +188,7 @@ for i, kt in enumerate(ktvals):
     plt.ylabel("Energy")
     plt.savefig("Energy"+str(i)+".pdf")
     plt.close()
-    cv_vals.append(calc_cv(E_set[int(num_steps/2):], kt, N[0]*N[1]))
+    cv_vals.append(calc_cv(avg_E, avg_E2, kt, N[0]*N[1]))
     deltas.append(rvals[2])
     mags.append(rvals[3])
     avgevals.append(rvals[4])
@@ -195,7 +198,7 @@ for i, kt in enumerate(ktvals):
 # -----------------------------------------------------------------------------
 # Magnetization vs kT
 plt.figure()
-plt.plot(ktvals, mags)
+plt.plot(ktvals[5:], mags[5:])
 plt.xlabel("$kT$")
 plt.ylabel("Average Magnetization")
 plt.title("Average Magnetization vs $kT$")
@@ -203,7 +206,7 @@ plt.savefig("mags.pdf")
 plt.close()
 # Average Energy vs kT
 plt.figure()
-plt.plot(ktvals, avgevals)
+plt.plot(ktvals[5:], avgevals[5:])
 plt.xlabel("$kT$")
 plt.ylabel("Average Energy")
 plt.title("Average Energy vs $kT$")
@@ -211,7 +214,7 @@ plt.savefig("avgEnergy.pdf")
 plt.close()
 # Specific Heat vs kT
 plt.figure()
-plt.plot(ktvals, cv_vals)
+plt.plot(ktvals[5:], cv_vals[5:])
 plt.xlabel("$kT$")
 plt.ylabel("CV")
 plt.title("Specific Heat vs Temperature")
