@@ -97,7 +97,7 @@ def diag_adjacents_2(S, coor):
     
 def energy_change(S, coor):
     # Multiply spin site by all adjacent elements
-    total_adjacent_spins = diag_adjacents_2(S, coor)
+    total_adjacent_spins = grid_adjacents(S, coor)
     return 2*S[coor]*(J*(total_adjacent_spins) + B*mu)
 
 def make_ani(deltas):
