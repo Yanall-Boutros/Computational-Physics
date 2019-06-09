@@ -10,7 +10,7 @@
 \date{\today}
 \maketitle
 \section*{I. Introduction}
-\indent \indent The Ising model is a model which displays the termodynamic
+\indent \indent The Ising model is a model which displays the thermodynamic
 properties of a ferromagnet by simulating the interactions of $N^2$  atoms
 (or spin-sites) on an $N\times N$ grid. The simulation flips a random spin-site
 by a factor of $-1$ and if the change in spin causes the energy change in the
@@ -21,7 +21,7 @@ adjacent to the test spin-site, typically the 2D ising model considers the
 spin sites $S_{i+1, j}$, $S_{i, j+1}$, $S_{i-1, j}$, and $S_{i, j-1}$ to 
 be adjacent to a spin site $S_{i, j}$. In this experiment, different definitions
 for adjacent spin-sites are implemented to observe how the physical properties
-and structure of the lattice change.
+and structure of the lattice change over time and over temperature.
 \section*{II. Background and Theory}
 \indent \indent The $2D$ Ising model contains some characteristics not present
 in the $1D$ Ising model, such as phase transitions. These transitions can be
@@ -82,12 +82,12 @@ our initial $kT$ to our final, for all time steps.
 
 \indent $\Delta E$ depends on the definition of what is an adjacent spin-site. 
 Our trials included three main definitions for adjacent sites: grid-adjacent,
-all-adjacent, and diag-adjacent. grid-adjacent is defined above in the 
+all-adjacent, and diag-adjacent. Grid-adjacent is defined above in the 
 \textbf{Introduction} and is the standard used in the 2D Ising model. All-adjacent
 is defined to include the diagonal sites as well, and diag-adjacent is only 
 the diagonal components.
 \section*{IV. Results}
-\indent \indent Figures 1 - 12 are provided below, and contain for each different site adjacency type
+\indent \indent Figures 1 through 12 are provided below, and contain for each different site adjacency type
 the energy vs time graphs at $kT = 1$, the average energy vs $kT$, the average 
 magnitzation vs $kT$, and the specific heat vs $kT$. The source code for this 
 project, as well as pdfs containing the energy vs time graphs for each $kT$, as 
@@ -150,7 +150,7 @@ Landau, Manuel J. Paez, and Cristian C. Bordeianu, my graphs for the grid-adj
 configuration appears flipped vertically for both the average energy and the 
 average magnitization. The simulation was ran multiple times, with different 
 methods for calculating $E$, $\Delta E$, and $M$ but yielded the same results.
-The inflection points occur at roughly the same value for $kT$ however which is 
+The inflection points occur at roughly the same value for $kT$ however, which is 
 a promising sign that the simulation shows some sign of success. The magnitization
 also appears flipped, as in my model the initial average magnitization is zero
 and jumps to its maximum after the phase transition, the book has it initially
@@ -159,9 +159,9 @@ this configuration, as we have a peak right at $kT \approx 2.5$, in agreement
 with the text.
 
 \indent The all-adjacent configuration has similar defects as the grid-adjacent
-configuration. Flipped values for average energy and average magnitization but
+configuration - flipped values for average energy and average magnitization but
 the specific heat is nominal. It appears in this configuration the critical
-temperature is a little lower, closer to 2.2, than in the previous configuration.
+temperature is a little lower - closer to 2.2 - than in the previous configuration.
 We can see this critical change occur at a value of $kT$ in \textbf{Figure 7}
 as the slope becomes less steep.
 
@@ -175,11 +175,12 @@ conclusions from this particular model.
 a possibility that it is accurate, implying atoms with electrons that are aligned
 $45^\circ$ off from the material they constitute really do exhibit these properties.
 Additionally, the structure of the material appears to maintain some order, so there
-is still some uncertainty on the results of this particular configuration. For now,
+is still some uncertainty on what conclusions we can make from
+this particular configuration. For now,
 areas to expand this project in the future should focus on generalizing the model
 to even more (if not all) dimensions, implementing and observing the wavelike 
 behaviour of spin pulses, and attempting to solve for the physical properties
-the 2D ising model by starting from the 4D Ising model which has a closed form 
+in the 2D ising model by starting from the 4D Ising model which has a closed form 
 solution, then slowly decreasing the length of one of the axes to be on the scale
 of the coherence length, making the model and its physical properties behave like
 a 3D model. Lastly, shorten again the length of one of the other remaining dimensions
